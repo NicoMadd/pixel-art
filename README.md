@@ -37,5 +37,6 @@ Its pretty simple actually. Though im not happy with the actual design.
 - Change to a tree implementation maybe? Reduce iteration searching. Maybe an index? Hash Index?
 - Change Backend and replicate NodeJS instances. If it needs to scale it will be difficult by now.
 - Add Redis to handle fast pixel changes and persistance among other instances in the future.
+- Handle pixels reset in client side, in case the server fails and returns to a older state.
 
 Anyway, back to sleep :sleeping:
