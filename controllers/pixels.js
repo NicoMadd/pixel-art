@@ -1,6 +1,9 @@
 const { logger } = require("../config/loggerConfig.js")
 const fs = require('fs');
 
+const X=10
+const Y=10
+
 var pixels = []
 var deltaPixels =[]
 var delta = 0;
@@ -13,8 +16,8 @@ fs.readFile('pixels.json', 'utf8', function (err, data) {
 const generateAllPixels =(req, res) => {
     var id = 1;
     const color = "#000000";
-    for (var x = 0; x < 100; x++) {
-        for(var y = 0; y < 100; y++) {
+    for (var x = 0; x < X; x++) {
+        for(var y = 0; y < Y; y++) {
             id++
             var pixel = {id, x, y, color}
             pixels.push(pixel)
@@ -25,7 +28,7 @@ const generateAllPixels =(req, res) => {
 
 const getAllPixels = async (req, res) => {
     logger.info("getAllPixels")
-    res.send({pixels})
+    res.send({pixels,delta})
 }
 
 const setPixel = async (req, res) => {
@@ -40,10 +43,10 @@ const setPixel = async (req, res) => {
 }
 
 const getDeltaPixels = async (req, res) => {
-    logger.info("getDeltaPixels")
+    // logger.info("getDeltaPixels")
     const { deltaID } = req.params
-    console.log("incoming delta",deltaID)
-    console.log("delta",delta)
+    // console.log("incoming delta",deltaID)
+    // console.log("delta",delta)
     if(delta != deltaID) {
         newPixels = deltaPixels.slice(deltaID, delta)
         res.send({delta,pixels:newPixels})
@@ -53,7 +56,7 @@ const getDeltaPixels = async (req, res) => {
 }
 
 const getDelta = async (req, res) => {
-    logger.info("getDelta")
+    // logger.info("getDelta")
     res.send({delta})
 }
 

@@ -1,0 +1,40 @@
+    body{
+        display: block;
+    }
+    
+    .colour-palette{
+        display: grid;
+        justify-content: space-around;
+        align-items: center;
+        align-content: center;
+        grid-template-columns: repeat(5,1fr);
+    }
+    .colour-palette .option{
+        display: flex;
+        min-width: 5vw;
+        min-height: 5vw;
+        max-width: 5vw;
+        max-height: 5vw;
+        /* height: 52vh; */
+        margin: 5px;
+        border: 1px solid black;
+        cursor: pointer;
+        font-size: 2vw;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+    }
+
+
+
+    .pixels-container {
+        display: grid;
+        grid-template-columns: repeat(100,1px); /* Has to be set by the dimension brought from the api*/
+        grid-template-rows: repeat(auto-fit, 1px);
+    }
+    
+
+    .pixel {
+        width: 1px;
+        height: 1px;
+    }
