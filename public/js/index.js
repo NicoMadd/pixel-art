@@ -2,7 +2,7 @@ var interval = null
 const updateFrequency = 100
 var delta = 0
 var updateTimes = 0
-pickedColour = "red"
+pickedColour = null
 const colours = [
   "red",
   "green",
@@ -27,7 +27,7 @@ const startRefresh = () => {
 const updatePixels = async () => {
   updateTimes++
   if (updateTimes % 10 == 0) {
-    console.log("Updating pixels", delta)
+    logger.info("Updating pixels", delta)
   }
   api.getDeltaPixels(delta).then(({ lastDelta, pixels }) => {
     if (lastDelta >= delta) {
@@ -40,14 +40,14 @@ const updatePixels = async () => {
       }
     } else {
       // lost synchronization
-      console.log("lost synchronization")
+      logger.info("lost synchronization")
       setInitialPixels()
     }
   })
 }
 
 const changePixelColor = (pixelId, color) => {
-  console.log("changePixelColor", pixelId, color)
+  logger.info("changePixelColor", pixelId, color)
   api.changePixelColour(pixelId, color).then((response) => {
     $(`#${pixelId}`).css("background-color", color)
   })
@@ -55,7 +55,7 @@ const changePixelColor = (pixelId, color) => {
 
 const setInitialPixels = () => {
   api.getAllPixels().then((pixels) => {
-    console.log("set Pixels")
+    logger.info("set Pixels")
     $("#container").empty()
     for (var i = 0; i < pixels.length; i++) {
       //TODO make method in elements
@@ -69,7 +69,7 @@ const getDelta = async () => {
 }
 
 const changePickedColour = (colour) => {
-  console.log("changePickedColour", colour)
+  logger.info("changePickedColour", colour)
   pickedColour = colour
   changeIconColour(colour)
 }
@@ -87,5 +87,6 @@ $("document").ready(function () {
   setInitialPixels()
   delta = getDelta()
   startIconCycle()
+  debug = true
   // updateManager = startRefresh()
 })

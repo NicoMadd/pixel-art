@@ -19,7 +19,7 @@ const api = {
       })
   },
   getAllPixels: async () => {
-    console.log("getAllPixels")
+    logger.info("getAllPixels")
     return axios
       .get(`${apiUrl}/pixels`)
       .then((res) => {
@@ -30,8 +30,8 @@ const api = {
       })
   },
   getDeltaPixels: async (delta) => {
-    console.log("getDeltaPixels")
-    console.log("delta", delta)
+    logger.info("getDeltaPixels")
+    logger.info("delta", delta)
     return axios
       .get(`${apiUrl}/pixels/${delta}`)
       .then((res) => {
@@ -43,7 +43,7 @@ const api = {
       })
   },
   getDelta: async () => {
-    console.log("getDelta")
+    logger.info("getDelta")
     axios
       .get(`${apiUrl}/pixels/delta`)
       .then((res) => {

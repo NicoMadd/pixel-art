@@ -16,8 +16,12 @@ const appendPixel = (pixel, to) => {
     class: "pixel",
     style: `background-color:${pixel.color}`,
     id: pixel.id,
-    click: function () {
-      changePixelColor(this.id, pickedColour)
+    click: async function () {
+      if (!pickedColour) {
+        logger.warn("Please pick a colour first")
+      } else {
+        changePixelColor(this.id, pickedColour)
+      }
     },
   }).appendTo(to)
 }
