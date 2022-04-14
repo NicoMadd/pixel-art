@@ -1,14 +1,12 @@
 const { logger } = require("../config/loggerConfig.js")
-const {
-  readPersistedPixels,
-  generateAllPixels,
-} = require("../utils/pixels-generator.js")
-
+const { generateAllPixels } = require("../utils/pixels-generator.js")
+const { PixelsContainerManager } = require("../utils/pixels-manager.js")
 const { PixelsContainer } = require("../utils/pixel.js")
 const X = 100
 const Y = 100
 
 var container = new PixelsContainer(0, X, Y)
+const pixelsManager = new PixelsContainerManager()
 
 const getAllPixels = async (req, res) => {
   logger.info("getAllPixels")
@@ -43,9 +41,16 @@ const getDelta = async (req, res) => {
   res.send({ delta })
 }
 
+const generatePixels = async (req, res) => {
+  logger.info("generatePixels")
+  generateAllPixels("0.json")
+  res.send({ message: "Pixels generated" })
+}
+
 module.exports = {
   getAllPixels,
   setPixel,
   getDeltaPixels,
   getDelta,
+  generatePixels,
 }
