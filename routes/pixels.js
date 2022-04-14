@@ -12,8 +12,8 @@ const {
 } = require("../controllers/pixels.js")
 
 router.route("/").get(getAllPixels).post(setPixel)
-router.route("/delta").get(getDelta)
 router.route("/generate").get(generatePixels)
-router.route("/:deltaID").get(getDeltaPixels)
+router.route("/container/:container_id/delta").get(getDelta)
+router.route("/container/:container_id/").get(getDeltaPixels)
 
 module.exports = { router }

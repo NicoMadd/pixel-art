@@ -71,7 +71,7 @@ class PixelsContainer {
   }
 
   getAllPixels() {
-    return this.pixels
+    return { container_id: this.id, pixels: this.pixels }
   }
 
   getPixel(pixelId) {
@@ -87,9 +87,9 @@ class PixelsContainer {
   getDeltaPixels(deltaID) {
     if (this.delta > deltaID) {
       newPixels = this.deltaPixels.slice(deltaID, this.delta)
-      return { delta: this.delta, newPixels }
+      return { delta: this.delta, pixels: newPixels }
     } else {
-      return { delta: this.delta, newPixels: [] }
+      return { delta: this.delta, pixels: [] }
     }
   }
 }

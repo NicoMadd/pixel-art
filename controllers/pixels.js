@@ -1,25 +1,22 @@
 const { logger } = require("../config/loggerConfig.js")
 const { generateAllPixels } = require("../utils/pixels-generator.js")
 const { PixelsContainerManager } = require("../utils/pixels-manager.js")
-const { PixelsContainer } = require("../utils/pixel.js")
 const X = 100
 const Y = 100
 
-var container = new PixelsContainer(0, X, Y)
-const pixelsManager = new PixelsContainerManager()
+const pixelsManager = new PixelsContainerManager(2, X, Y)
 
 const getAllPixels = async (req, res) => {
   logger.info("getAllPixels")
-  const pixels = container.getAllPixels()
-  const delta = container.getDelta()
-  res.send({ pixels, delta })
+  const pixels = pixelsManager.getAllPixels()
+  res.send({ pixels })
 }
 
 const setPixel = async (req, res) => {
   try {
-    const { pixelId, color } = req.body
-    console.log(pixelId, color)
-    var delta = container.setPixelColor(pixelId, color)
+    const { container_id, pixel_id, color } = req.body
+    console.log(container_id, pixel_id, color)
+    const delta = pixelsManager.setPixel(container_id, pixel_id, color)
     res.send({ delta })
   } catch (error) {
     logger.error(error)
@@ -29,16 +26,29 @@ const setPixel = async (req, res) => {
 
 const getDeltaPixels = async (req, res) => {
   // logger.info("getDeltaPixels")
-  const { deltaID } = req.params
-
-  const { delta, pixels } = container.getDeltaPixels(deltaID)
-  res.send({ delta, pixels })
+  try {
+    const { container_id, delta_id } = req.params
+    const { delta, pixels } = pixelsManager.getDeltaPixels(
+      container_id,
+      delta_id
+    )
+    res.send({ delta, pixels })
+  } catch (error) {
+    logger.error(error)
+    res.status(409).send({ error: { message: error.message } })
+  }
 }
 
 const getDelta = async (req, res) => {
   // logger.info("getDelta")
-  const delta = container.getDelta()
-  res.send({ delta })
+  try {
+    const { container_id } = req.params
+    const delta = pixelsManager.getDelta(container_id)
+    res.send({ delta })
+  } catch (error) {
+    logger.error(error)
+    res.status(409).send({ error: { message: error.message } })
+  }
 }
 
 const generatePixels = async (req, res) => {
