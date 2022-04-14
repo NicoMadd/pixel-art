@@ -25,3 +25,11 @@ const appendPixel = (pixel, to) => {
     },
   }).appendTo(to)
 }
+
+const appendMenuOption = (text, to, click) => {
+  $("<div>", {
+    class: "menu-option",
+    text: text,
+    click: click,
+  }).appendTo(to)
+}

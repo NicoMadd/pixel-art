@@ -83,6 +83,7 @@ const setColourPalette = () => {
 }
 
 $("document").ready(function () {
+  setMenu()
   setColourPalette()
   setInitialPixels()
   delta = getDelta()

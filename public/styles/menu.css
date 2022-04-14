@@ -1,0 +1,29 @@
+.side-menu {
+  /* position: fixed; */
+}
+
+.side-menu .main {
+  font-size: 100%;
+  top: 0;
+  left: 0;
+  padding: 2vh 3vw 3vh 1vw;
+}
+
+.side-menu .content {
+  transform: translateX(-200%);
+  transition: transform 0.5s;
+}
+
+.side-menu .main:hover + .content {
+  transform: translateX(0);
+  transition: transform 0.45s;
+}
+
+.side-menu .content:hover {
+  transform: translateX(0);
+  transition: all 0.5s;
+}
+
+.side-menu .content .menu-option {
+  font-size: 20%;
+}
