@@ -13,9 +13,11 @@ const validColours = [
 ]
 
 class Pixel {
-  constructor(id, color) {
+  constructor(id, x, y, color) {
     this.id = id
     this.color = color
+    this.x = x
+    this.y = y
   }
 
   getId() {
@@ -27,6 +29,13 @@ class Pixel {
   setColor(color) {
     this.color = color
   }
+
+  getX() {
+    return this.x
+  }
+  getY() {
+    return this.y
+  }
 }
 
 class PixelsContainer {
@@ -36,7 +45,7 @@ class PixelsContainer {
     this.y = y
     this.deltaPixels = []
     this.pixels = require(`../pixels-map/${id}.json`).map((pixel) => {
-      return new Pixel(pixel.id, pixel.color)
+      return new Pixel(pixel.id, pixel.x, pixel.y, pixel.color)
     })
     this.delta = 0
   }
@@ -78,11 +87,11 @@ class PixelsContainer {
   getDeltaPixels(deltaID) {
     if (this.delta > deltaID) {
       newPixels = this.deltaPixels.slice(deltaID, this.delta)
-      return { delta, newPixels }
+      return { delta: this.delta, newPixels }
     } else {
-      return { delta, newPixels: [] }
+      return { delta: this.delta, newPixels: [] }
     }
   }
 }
 
-module.exports = { PixelsContainer }
+module.exports = { PixelsContainer, Pixel }
