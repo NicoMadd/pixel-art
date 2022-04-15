@@ -85,8 +85,9 @@ class PixelsContainer {
   }
 
   getDeltaPixels(deltaID) {
+    console.log(this.deltaPixels, deltaID)
     if (this.delta > deltaID) {
-      newPixels = this.deltaPixels.slice(deltaID, this.delta)
+      const newPixels = this.deltaPixels.slice(deltaID, this.delta)
       return { delta: this.delta, pixels: newPixels }
     } else {
       return { delta: this.delta, pixels: [] }

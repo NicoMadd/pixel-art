@@ -1,9 +1,13 @@
+const {
+  broadcast,
+  strToUint8Array,
+} = require("../config/configureWebSocket.js")
 const { logger } = require("../config/loggerConfig.js")
 const { generateAllPixels } = require("../utils/pixels-generator.js")
 const { PixelsContainerManager } = require("../utils/pixels-manager.js")
 const X = 100
 const Y = 100
-const ncontainers = 18
+const ncontainers = 4
 const pixelsManager = new PixelsContainerManager(ncontainers, X, Y)
 
 const getAllPixels = async (req, res) => {
@@ -17,6 +21,7 @@ const setPixel = async (req, res) => {
     const { container_id, pixel_id, color } = req.body
     console.log(container_id, pixel_id, color)
     const delta = pixelsManager.setPixel(container_id, pixel_id, color)
+    broadcast(JSON.stringify({ container_id, pixel_id, color }))
     res.send({ delta })
   } catch (error) {
     logger.error(error)

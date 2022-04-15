@@ -14,6 +14,6 @@ const {
 router.route("/").get(getAllPixels).post(setPixel)
 router.route("/generate").get(generatePixels)
 router.route("/container/:container_id/delta").get(getDelta)
-router.route("/container/:container_id/").get(getDeltaPixels)
+router.route("/container/:container_id/:delta_id").get(getDeltaPixels)
 
 module.exports = { router }

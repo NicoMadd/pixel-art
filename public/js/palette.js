@@ -25,3 +25,7 @@ const setColourPalette = () => {
     appendColourOption(colour, palette)
   }
 }
+
+const getPickedColour = () => {
+  return pickedColour
+}

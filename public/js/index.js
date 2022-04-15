@@ -3,11 +3,18 @@ const updateFrequency = 100
 var delta = 0
 var updateTimes = 0
 
+var mousedown = false
+
+const setPixelColor = (containerId, pixelId, color) => {
+  $(`#container_${containerId} #${pixelId}`).css("background-color", color)
+}
+
+//API IMPLEMENTATION
 const stopRefresh = () => {
   clearInterval(interval)
 }
 
-const startRefresh = () => {
+const startRefresh = (socket) => {
   interval = setInterval(updatePixels, updateFrequency)
 }
 
@@ -33,8 +40,24 @@ const updatePixels = async () => {
   })
 }
 
+//WS IMPLEMENTATION
+
+const setSocketUpdates = ({ socket, onMessage }) => {
+  onMessage((data) => {
+    // console.log("data", data)
+    const { container_id, pixel_id, color } = data
+    if (container_id == null || pixel_id == null || color == null) {
+      logger.info("invalid data")
+      return
+    }
+    $(`#container_${container_id} #${pixel_id}`).css("background-color", color)
+  })
+}
+
+//------------------------------
+
 const changePixelColor = (containerId, pixelId, color) => {
-  logger.info("changePixelColor", containerId, pixelId, color)
+  // logger.info("changePixelColor", containerId, pixelId, color)
   api.changePixelColour(containerId, pixelId, color).then((response) => {
     $(`#container_${containerId} #${pixelId}`).css("background-color", color)
   })
@@ -60,8 +83,30 @@ $("document").ready(function () {
   setMenu()
   setColourPalette()
   setInitialPixels()
-  // delta = getDelta()
   startIconCycle()
   debug = true
-  // updateManager = startRefresh()
+
+  //WS IMPLEMENTATION
+  setSocketUpdates(getSocket())
+
+  //API IMPLEMENTATION
+  // updateManager = startRefresh(getSocket())
+
+  $("main").mousedown(function () {
+    mousedown = true
+  })
+
+  $("main").mouseup(function () {
+    mousedown = false
+  })
+
+  $("main").mousemove(function (e) {
+    if (mousedown) {
+      const div = $(e.target)
+      const containerId = div.parent().attr("id").split("_")[1]
+      const pixelId = div.attr("id")
+      const color = getPickedColour()
+      changePixelColor(containerId, pixelId, color)
+    }
+  })
 })
