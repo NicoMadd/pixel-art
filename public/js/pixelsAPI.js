@@ -1,10 +1,11 @@
 const apiUrl = "http://localhost:5000/api"
 
 const api = {
-  changePixelColour: async (pixelId, color) => {
+  changePixelColour: async (containerId, pixelId, color) => {
     return axios
       .post(`${apiUrl}/pixels`, {
-        pixelId: pixelId,
+        container_id: containerId,
+        pixel_id: pixelId,
         color: color,
       })
       .then((res) => {
@@ -23,7 +24,7 @@ const api = {
     return axios
       .get(`${apiUrl}/pixels`)
       .then((res) => {
-        return res.data.pixels
+        return res.data.containers
       })
       .catch((error) => {
         console.error(error)

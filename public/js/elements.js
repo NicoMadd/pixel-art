@@ -11,7 +11,7 @@ const appendColourOption = (colour, to) => {
   }).appendTo(to)
 }
 
-const appendPixel = (pixel, to) => {
+const appendPixel = (pixel, containerID) => {
   $(`<div>`, {
     class: "pixel",
     style: `background-color:${pixel.color}`,
@@ -20,10 +20,10 @@ const appendPixel = (pixel, to) => {
       if (!pickedColour) {
         logger.warn("Please pick a colour first")
       } else {
-        changePixelColor(this.id, pickedColour)
+        changePixelColor(containerID, this.id, pickedColour)
       }
     },
-  }).appendTo(to)
+  }).appendTo(`#container_${containerID}`)
 }
 
 const appendMenuOption = (text, to, click) => {
@@ -32,4 +32,15 @@ const appendMenuOption = (text, to, click) => {
     text: text,
     click: click,
   }).appendTo(to)
+}
+
+const appendPixelsContainer = (containerId, pixels, to) => {
+  $("<div>", {
+    class: "pixels-container",
+    id: `container_${containerId}`,
+  }).appendTo(to)
+  for (var i = 0; i < pixels.length; i++) {
+    //TODO make method in elements
+    appendPixel(pixels[i], containerId)
+  }
 }

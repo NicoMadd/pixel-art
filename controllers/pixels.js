@@ -3,13 +3,13 @@ const { generateAllPixels } = require("../utils/pixels-generator.js")
 const { PixelsContainerManager } = require("../utils/pixels-manager.js")
 const X = 100
 const Y = 100
-
-const pixelsManager = new PixelsContainerManager(2, X, Y)
+const ncontainers = 18
+const pixelsManager = new PixelsContainerManager(ncontainers, X, Y)
 
 const getAllPixels = async (req, res) => {
   logger.info("getAllPixels")
-  const pixels = pixelsManager.getAllPixels()
-  res.send({ pixels })
+  const containers = pixelsManager.getAllPixels()
+  res.send({ containers })
 }
 
 const setPixel = async (req, res) => {
@@ -53,7 +53,9 @@ const getDelta = async (req, res) => {
 
 const generatePixels = async (req, res) => {
   logger.info("generatePixels")
-  generateAllPixels("0.json")
+  for (let i = 0; i < ncontainers; i++) {
+    generateAllPixels(`${i}.json`)
+  }
   res.send({ message: "Pixels generated" })
 }
 

@@ -2,19 +2,6 @@ var interval = null
 const updateFrequency = 100
 var delta = 0
 var updateTimes = 0
-pickedColour = null
-const colours = [
-  "red",
-  "green",
-  "blue",
-  "yellow",
-  "orange",
-  "purple",
-  "pink",
-  "white",
-  "black",
-]
-const colourPaletteId = "colour_palette"
 
 const stopRefresh = () => {
   clearInterval(interval)
@@ -46,21 +33,22 @@ const updatePixels = async () => {
   })
 }
 
-const changePixelColor = (pixelId, color) => {
-  logger.info("changePixelColor", pixelId, color)
-  api.changePixelColour(pixelId, color).then((response) => {
-    $(`#${pixelId}`).css("background-color", color)
+const changePixelColor = (containerId, pixelId, color) => {
+  logger.info("changePixelColor", containerId, pixelId, color)
+  api.changePixelColour(containerId, pixelId, color).then((response) => {
+    $(`#container_${containerId} #${pixelId}`).css("background-color", color)
   })
 }
 
 const setInitialPixels = () => {
-  api.getAllPixels().then((pixels) => {
+  api.getAllPixels().then((containers) => {
     logger.info("set Pixels")
-    $("#container").empty()
-    for (var i = 0; i < pixels.length; i++) {
-      //TODO make method in elements
-      appendPixel(pixels[i], "#container")
-    }
+    containers.forEach((container) => {
+      const containerId = container.container_id
+      const pixels = container.pixels
+      $(`#container_${containerId}`).empty()
+      appendPixelsContainer(containerId, pixels, "main")
+    })
   })
 }
 
@@ -68,25 +56,11 @@ const getDelta = async () => {
   await api.getDelta()
 }
 
-const changePickedColour = (colour) => {
-  logger.info("changePickedColour", colour)
-  pickedColour = colour
-  changeIconColour(colour)
-}
-
-const setColourPalette = () => {
-  const palette = $(`#${colourPaletteId}`)
-  for (let i = 0; i < colours.length; i++) {
-    const colour = colours[i]
-    appendColourOption(colour, palette)
-  }
-}
-
 $("document").ready(function () {
   setMenu()
   setColourPalette()
   setInitialPixels()
-  delta = getDelta()
+  // delta = getDelta()
   startIconCycle()
   debug = true
   // updateManager = startRefresh()

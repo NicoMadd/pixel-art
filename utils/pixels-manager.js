@@ -26,12 +26,14 @@ class PixelsContainerManager {
 
   setPixel(containerId, pixelId, color) {
     const container = this.getContainer(containerId)
+    if (!container) throw new Error(`Container ${containerId} doesnt exist`)
     const delta = container.setPixelColor(pixelId, color)
     return delta
   }
 
   getDelta(containerId) {
     const container = this.getContainer(containerId)
+    if (!container) throw new Error(`Container ${containerId} doesnt exist`)
     const delta = container.getDelta()
     return delta
   }
