@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "615f7373-a575-4014-aefe-66875e598e90",
+		"name": "Pixel Art",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Pixels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{domain}}:{{port}}/api/pixels",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"pixels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Pixel",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "container_id",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "pixel_id",
+							"value": "500",
+							"type": "text"
+						},
+						{
+							"key": "color",
+							"value": "blue",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{protocol}}://{{domain}}:{{port}}/api/pixels",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"pixels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Delta",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "pixelID",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "color",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{protocol}}://{{domain}}:{{port}}/api/pixels/delta",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"pixels",
+						"delta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Delta Pixels",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "pixelID",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "color",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{protocol}}://{{domain}}:{{port}}/api/pixels/33",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"pixels",
+						"33"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate All Pixels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{domain}}:{{port}}/api/pixels/generate",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"pixels",
+						"generate"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "protocol",
+			"value": "http"
+		},
+		{
+			"key": "domain",
+			"value": "localhost"
+		},
+		{
+			"key": "port",
+			"value": "5000"
+		}
+	]
+}
